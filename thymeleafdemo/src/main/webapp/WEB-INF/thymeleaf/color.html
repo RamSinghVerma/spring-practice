@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Thymeleaf</title>
+</head>
+<body>
+   <p>
+    	<span th:text="${localtime}"></span>
+   </p>
+   <h5>Iterating Color list</h5>
+   <table>
+   <tbody>
+   	<tr th:each="color: ${colorNames}">
+   		<td th:text="${color}"></td>
+   	</tr>
+
+   </tbody>
+   </table>
+   <h5>Iterating Color Object</h5>
+   <table>
+   		<tr><th>#</th><th>CODE</th><th>NAME</th><th>COUNT</th></tr>
+   		<tr th:each="color, stat: ${colors}">
+   			<td th:text="${stat.index + 1}"></td>
+	   		<td th:text="${color.code}"></td>
+	   		<td th:text="${color.name}"></td>
+	   		<td th:text="${stat.count}"></td>
+   		</tr>
+   		<tr><td colspan="2">COLOR LIST SIZE</td><td colspan="2" th:text="${#lists.size(colors)}"></td></tr>
+   </table>
+</body>
+</html>
