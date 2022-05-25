@@ -10,7 +10,7 @@
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>5.3.12.RELEASE</spring.version>
+		<spring.version>5.5.7</spring.version>
 		<spring.security.version>5.5.3.RELEASE</spring.security.version>
 		<jackson-databind>2.13.0</jackson-databind>
 		<junit-jupiter>5.8.0</junit-jupiter>
