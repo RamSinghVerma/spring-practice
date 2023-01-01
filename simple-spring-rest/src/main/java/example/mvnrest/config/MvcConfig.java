@@ -1,5 +1,7 @@
 package example.mvnrest.config;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.context.annotation.ComponentScan;
@@ -13,9 +15,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 
 @Configuration
 @EnableWebMvc
@@ -27,9 +31,12 @@ public class MvcConfig implements WebMvcConfigurer {
 		WebMvcConfigurer.super.configureMessageConverters(converters);
 		MappingJackson2HttpMessageConverter jacksonMapper = new MappingJackson2HttpMessageConverter();
 		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
-		builder.modulesToInstall(new Jdk8Module(), new JavaTimeModule())
+		builder.modulesToInstall(new Jdk8Module(), new JavaTimeModule()
+				.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer()))
 		//.featuresToEnable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
 		//.featuresToDisable(DeserializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+		//.timeZone("Asia/Kolkata")
+		//.deserializerByType(LocalDateTime.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
 		.serializationInclusion(Include.NON_NULL)
 		.propertyNamingStrategy(PropertyNamingStrategy.LOWER_CAMEL_CASE);		
 		jacksonMapper.setObjectMapper(builder.build());
